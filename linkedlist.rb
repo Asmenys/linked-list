@@ -3,8 +3,6 @@
 require 'awesome_print'
 require 'pry-byebug'
 
-AwesomePrint.pry!
-
 # linked list
 class LinkedList
   attr_accessor :head
@@ -72,7 +70,7 @@ class LinkedList
   end
 
   def find(value, head = @head)
-    return nil if contains?(value) == false
+    return nil if countains?(value) == false
 
     result = 0
     if head.value == value
@@ -95,6 +93,24 @@ class LinkedList
       result
     end
   end
+
+  def insert_at(value, index, temp_index = 0, head = @head)
+    if temp_index == index
+      temp_next_node_pointer = head.next_node
+      head.next_node = Node.new(value, temp_next_node_pointer)
+    else
+      insert_at(value, index, temp_index += 1, head.next_node)
+    end
+  end
+
+  def remove_at(index, temp_index = 0, head = @head)
+    if temp_index == index - 1
+      temp_node_pointer = head.next_node.next_node
+      head.next_node = temp_node_pointer
+    else
+      remove_at(index, temp_index += 1, head.next_node)
+    end
+  end
 end
 
 # node class
@@ -106,6 +122,3 @@ class Node
     @next_node = next_node
   end
 end
-tlist = LinkedList.new('head')
-binding.pry
-text = 'text'
