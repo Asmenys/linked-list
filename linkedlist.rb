@@ -52,6 +52,49 @@ class LinkedList
       at(index, current_index += 1, head.next_node)
     end
   end
+
+  def pop(head = @head)
+    if head.next_node.next_node.nil?
+      head.next_node = nil
+    else
+      pop(head.next_node)
+    end
+  end
+
+  def contains?(value, head = @head)
+    if head.value == value
+      true
+    elsif head.next_node.nil?
+      false
+    else
+      contains?(value, head.next_node)
+    end
+  end
+
+  def find(value, head = @head)
+    return nil if contains?(value) == false
+
+    result = 0
+    if head.value == value
+      0
+    else
+      result = find(value, head.next_node)
+      result += 1
+      result
+    end
+  end
+
+  def to_s(head = @head)
+    result = ''
+    if head.next_node.nil?
+      head.value
+    else
+      result += head.value
+      result += ' -> '
+      result += to_s(head.next_node)
+      result
+    end
+  end
 end
 
 # node class
